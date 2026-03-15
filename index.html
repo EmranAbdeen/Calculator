@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Calculator</title>
+  </head>
+  <body>
+    <div class="cal">
+      <!-- Calculator Screen -->
+      <div class="text">
+        <div id="operation" class="operation-display"></div>
+        <input type="text" id="text" value="0" readonly />
+      </div>
+
+      <!-- Calculator Buttons in a Grid -->
+      <div class="keybtn">
+        <button class="action" id="AC">AC</button>
+        <button class="action" id="del">DEL</button>
+        <button class="action" id="Mod">%</button>
+        <button class="operator" id="Div">&#247;</button>
+        <!-- ! OR ÷  -->
+
+        <button id="seven">7</button>
+        <button id="eight">8</button>
+        <button id="nine">9</button>
+        <button class="operator" id="Mul">×</button>
+
+        <button id="four">4</button>
+        <button id="five">5</button>
+        <button id="six">6</button>
+        <button class="operator" id="Sub">-</button>
+
+        <button id="one">1</button>
+        <button id="two">2</button>
+        <button id="three">3</button>
+        <button class="operator" id="Add">+</button>
+
+        <button id="zero">0</button>
+        <button id="dot">.</button>
+        <button id="equals">=</button>
+      </div>
+    </div>
+    <script src="Scripts/Script.js"></script>
+    
+  </body>
+</html>
