@@ -54,11 +54,13 @@ document.addEventListener("click", function (e) {
   }
   // AC
   if (e.target.id === "AC") {
-    AC();
+    result.value = "0";
+    let operation = document.getElementById("operation");
+    if (operation) operation.innerText = "";
   }
   // delete
-  if (e.target.id === "del") {
-    backspace();
+  if (e.target.id === "backspace") {
+    result.value = result.value.slice(0, -1);
   }
   //! Result
   if (e.target.id === "equals") {
@@ -78,15 +80,6 @@ function addOperator(op) {
   ) {
     result.value += op;
   }
-}
-function AC() {
-  result.value = "0";
-  let operation = document.getElementById("operation");
-  if (operation) operation.innerText = "";
-}
-
-function backspace() {
-  result.value = result.value.slice(0, -1);
 }
 
 function equals() {
