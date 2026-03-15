@@ -38,7 +38,7 @@ document.addEventListener("click", function (e) {
   } else if (e.target.id === "Mod") {
     addOperator("%");
   } else if (e.target.id === "Mul") {
-    addOperator("x");
+    addOperator("X");
   } else if (e.target.id === "Div") {
     addOperator("/");
   }
@@ -73,7 +73,6 @@ function addOperator(op) {
     lastChar !== "+" &&
     lastChar !== "-" &&
     lastChar !== "*" &&
-    lastChar !== "x" &&
     lastChar !== "/" &&
     lastChar !== "%"
   ) {
@@ -91,7 +90,7 @@ function backspace() {
 }
 
 function equals() {
-  let expression = result.value.replace(/x/g, "*");
+  let expression = result.value.replace(/X/g, "*");
   let operation = document.getElementById("operation");
   try {
     let OldValue = eval(expression);
