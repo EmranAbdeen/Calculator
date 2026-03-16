@@ -89,6 +89,10 @@ function equals() {
     let OldValue = eval(expression);
     if (operation) operation.innerText = result.value + " =";
     result.value = OldValue;
+
+    if (result.value === "undefined" || result.value === "NaN") {
+      result.value = "0";
+    }
   } catch {
     if (operation) operation.innerText = "";
     result.value = "Error";
