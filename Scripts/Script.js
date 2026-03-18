@@ -75,6 +75,7 @@ function addOperator(op) {
     lastChar !== "+" &&
     lastChar !== "-" &&
     lastChar !== "*" &&
+    lastChar !== "X" &&
     lastChar !== "/" &&
     lastChar !== "%"
   ) {
