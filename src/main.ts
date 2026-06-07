@@ -5,61 +5,140 @@ import "./style/dark.css";
 const appElement = document.getElementById("app")!;
 appElement.innerHTML = `
 <div class="cal">
-    <!-- Header with single elegant sun/moon toggle button -->
-    <div class="theme-header">
-    
-      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Theme">
-        <span class="sun-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-760v-160h80v160h-80Zm266 110-55-55 112-115 56 57-113 113Zm54 210v-80h160v80H760ZM440-40v-160h80v160h-80ZM254-652 140-763l57-56 113 113-56 54Zm508 512L651-255l54-54 114 110-57 59ZM40-440v-80h160v80H40Zm157 300-56-57 112-112 29 27 29 28-114 114Zm113-170q-70-70-70-170t70-170q70-70 170-70t170 70q70 70 70 170t-70 170q-70 70-170 70t-170-70Zm283-57q47-47 47-113t-47-113q-47-47-113-47t-113 47q-47 47-47 113t47 113q47 47 113      47t113-47ZM480-480Z"/></svg>
-        </span>
-        <span class="moon-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20 3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z"/></svg>
-        </span>
-      </button>
-    </div>
+      <!-- Header with single elegant sun/moon toggle button -->
+      <div class="theme-header">
+        <div class="brand-title">Calculator</div>
+        <div class="header-controls">
+          <select id="calc-mode-select">
+            <option value="normal">Standard Calculator</option>
+            <option value="developer">Developer Calculator</option>
+          </select>
+          <button
+            class="theme-toggle-btn"
+            id="theme-toggle-btn"
+            title="Toggle Theme"
+          >
+            <span class="sun-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#e3e3e3"
+              >
+                <path
+                  d="M440-760v-160h80v160h-80Zm266 110-55-55 112-115 56 57-113 113Zm54   210v-80h160v80H760ZM440-40v-160h80v160h-80ZM254-652 140-763l57-56 113 113-56 54Zm508  512L651-255l54-54 114 110-57 59ZM40-440v-80h160v80H40Zm157 300-56-57 112-112 29 27 29 28-114   114Zm113-170q-70-70-70-170t70-170q70-70 170-70t170 70q70 70 70 170t-70 170q-70 70-170   70t-170-70Zm283-57q47-47 47-113t-47-113q-47-47-113-47t-113 47q-47 47-47 113t47 113q47 47  113      47t113-47ZM480-480Z"
+                />
+              </svg>
+            </span>
+            <span class="moon-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#000000"
+              >
+                <path
+                  d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5  3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0   150-105 255T480-120Zm0-80q88 0 158-48.5T740-375q-20 5-40 8t-40 3q-123 0-209.5-86.5T364-660q0-20   3-40t8-40q-78 32-126.5 102T200-480q0 116 82 198t198 82Zm-10-270Z"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+      <!-- Double-row glass screen -->
+      <div class="text">
+        <div class="history-expr" id="history-display"></div>
+        <input type="text" id="text" value="0" readonly />
+      </div>
 
-    <!-- Double-row glass screen -->
-    <div class="text">
-      <div class="history-expr" id="history-display"></div>
-      <input type="text" id="text" value="0" readonly />
-    </div>
+      <!-- Programmer Base Conversion Display Panel >
+      <div class="programmer-panel" id="programmer-panel">
+        <div class="base-row" id="row-hex" data-base="HEX">
+          <span class="base-label">HEX</span>
+          <span class="base-value" id="val-hex">0</span>
+        </div>
+        <div class="base-row active" id="row-dec" data-base="DEC">
+          <span class="base-label">DEC</span>
+          <span class="base-value" id="val-dec">0</span>
+        </div>
+        <div class="base-row" id="row-oct" data-base="OCT">
+          <span class="base-label">OCT</span>
+          <span class="base-value" id="val-oct">0</span>
+        </div>
+        <div class="base-row" id="row-bin" data-base="BIN">
+          <span class="base-label">BIN</span>
+          <span class="base-value" id="val-bin">0</span>
+        </div>
+      </div-->
 
-    <!-- Interactive Button Grid -->
-    <div class="keybtn">
+      <div class="keybtn">
         <button class="action" id="AC">AC</button>
         <button class="action" id="backspace">DEL</button>
         <button class="action" id="Mod">%</button>
         <button class="operator" id="Div">÷</button>
 
-        <button class="number" data-value="7" >7</button>
-        <button class="number" data-value="8" >8</button>
-        <button class="number" data-value="9" >9</button>
+        <button class="number" data-value="7">7</button>
+        <button class="number" data-value="8">8</button>
+        <button class="number" data-value="9">9</button>
         <button class="operator" id="Mul">×</button>
 
-        <button class="number" data-value="4" >4</button>
-        <button class="number" data-value="5" >5</button>
-        <button class="number" data-value="6" >6</button>
+        <button class="number" data-value="4">4</button>
+        <button class="number" data-value="5">5</button>
+        <button class="number" data-value="6">6</button>
         <button class="operator" id="Sub">-</button>
 
-        <button class="number" data-value="1" >1</button>
-        <button class="number" data-value="2" >2</button>
-        <button class="number" data-value="3" >3</button>
+        <button class="number" data-value="1">1</button>
+        <button class="number" data-value="2">2</button>
+        <button class="number" data-value="3">3</button>
         <button class="operator" id="Add">+</button>
 
-        <button class="number" id="zero" data-value="0" >0</button>
+        <button class="number" id="zero" data-value="0">0</button>
         <button id="dot">.</button>
         <button id="equals">=</button>
+      </div>
     </div>
-</div>
 `;
 
 let result = document.getElementById("text") as HTMLInputElement;
-
-// <===================Toggle Theme=======================>
-
+const historyExpression = document.getElementById(
+  "history-display",
+) as HTMLElement;
 const themeToggleBtn = document.getElementById(
   "theme-toggle-btn",
 ) as HTMLButtonElement;
+// const calcModeSelect = document.getElementById(
+//   "calc-mode-select",
+// ) as HTMLSelectElement;
+// const calElement = document.querySelector(".cal") as HTMLElement;
+let justCalculated = false;
+
+// <===================Calculator Mode=======================>
+
+// function setCalcMode(mode: "normal" | "developer") {
+//   if (mode === "developer") {
+//     calElement.classList.add("mode-developer");
+//   } else {
+//     calElement.classList.remove("mode-developer");
+//   }
+//   calcModeSelect.value = mode;
+//   localStorage.setItem("calc-mode", mode);
+// }
+
+// const savedMode = localStorage.getItem("calc-mode") as
+//   | "normal"
+//   | "developer"
+//   | null;
+// setCalcMode(savedMode || "normal");
+
+// calcModeSelect.addEventListener("change", () => {
+//   setCalcMode(calcModeSelect.value as "normal" | "developer");
+// });
+
+// <===================Calculator Mode end=======================>
+
+// <===================Toggle Theme=======================>
 
 function setTheme(theme: "light" | "dark") {
   if (theme === "light") {
@@ -93,21 +172,40 @@ themeToggleBtn.addEventListener("click", () => {
 let numbers = document.querySelectorAll(".number")!;
 numbers.forEach((btn) => {
   btn.addEventListener("click", function (event) {
-
     clearError();
 
     const value = (event.target as HTMLButtonElement).dataset.value!;
 
-    result.value = result.value === "0" ? value : result.value + value;
+    if (justCalculated) {
+      result.value = value;
+      justCalculated = false;
+    } else {
+      result.value = result.value === "0" ? value : result.value + value;
+    }
   });
 });
 
 //<===================numbers end=======================>
 
+document.querySelectorAll(".hex-key").forEach((btn) => {
+  btn.addEventListener("click", (event) => {
+    clearError();
+    const hex = (event.target as HTMLButtonElement).dataset.hex!;
+
+    if (justCalculated) {
+      result.value = hex;
+      justCalculated = false;
+    } else {
+      result.value = result.value === "0" ? hex : result.value + hex;
+    }
+  });
+});
+
 //Delete
 function deleteElement(target: HTMLElement) {
   if (target.id === "backspace") {
     result.value = result.value.slice(0, -1);
+    justCalculated = false;
   }
 }
 // AC --> All Clear
@@ -115,6 +213,7 @@ function reset(target: HTMLElement) {
   if (target.id === "AC") {
     result.value = "0";
   }
+  clearHistory();
 }
 
 //Operation
@@ -136,6 +235,7 @@ function operation(target: HTMLElement) {
   const isLastOperators = ["%", "/", "X", "-", "+"].includes(lastChar);
   if (!isLastOperators) {
     result.value += op;
+    justCalculated = false;
   }
 }
 
@@ -146,20 +246,33 @@ function decimal() {
 
   if (!lastNumber.includes(".")) {
     result.value += ".";
+    justCalculated = false;
   }
 }
-
 // ! Result
+//* historyValue
 function equals() {
   let expression = result.value.replace("X", "*");
   try {
+    historyExpression.textContent = result.value + " =";
     result.value = eval(expression);
+
+    justCalculated = true;
+    if (result.value === "undefined" || result.value === "NaN" || result.value === "null") {
+      result.value = "0";
+    }
   } catch {
     result.value = "Error";
     result.style.color = "red";
+    result.style.fontSize = "2.8rem";
+    result.style.letterSpacing = "2.5px";
+    clearHistory();
   }
 }
-
+//* Clear history
+function clearHistory() {
+  historyExpression.textContent = "";
+}
 // * Clear Error
 function clearError() {
   if (result.value === "Error") {
@@ -174,11 +287,12 @@ function clearError() {
     result.style.color = "#1e293b";
   }
 }
+
 document.addEventListener("click", function (event) {
   const target = event.target as HTMLElement;
 
   clearError();
-  
+
   target.id === "AC"
     ? reset(target)
     : target.id === "backspace"
