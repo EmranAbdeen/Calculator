@@ -3,14 +3,16 @@
 A modern, dual-mode calculator built with **TypeScript** and **Vite** — featuring a Standard mode for everyday arithmetic and a Developer mode for working with multiple number bases (HEX, DEC, OCT, BIN).
 
 ## 📸 Screenshots
- 
-| Dark Theme | Light Theme |
-|---|---|
-| ![Dark Standard](public/Screenshots/dark-standard.png) | ![Light Standard](public/Screenshots/light-standard.png) |
-| ![Dark Developer](public/Screenshots/dark-developer.png) | ![Light Developer](public/Screenshots/light-developer.png) |
- 
+
+| Dark Theme                                             | Light Theme                                              |
+| ------------------------------------------------------ | -------------------------------------------------------- |
+| ![Dark Standard](docs/Screenshots/dark-standard.png)   | ![Light Standard](docs/Screenshots/light-standard.png)   |
+| ![Dark Developer](docs/Screenshots/dark-developer.png) | ![Light Developer](docs/Screenshots/light-developer.png) |
+
 ---
+
 ---
+
 ## Features
 
 ### Standard Mode
@@ -37,7 +39,7 @@ A modern, dual-mode calculator built with **TypeScript** and **Vite** — featur
 
 - Light and Dark themes with a toggle button
 - Detects the OS/browser color scheme preference automatically on first load
-- Theme preference is saved to `localStorage` 
+- Theme preference is saved to `localStorage`
 
 ### 💾 Persistence
 
@@ -50,12 +52,13 @@ A modern, dual-mode calculator built with **TypeScript** and **Vite** — featur
 
 ```
 project/
-├── public/              # Static assets
+├── docs/              # Images used in the README documentation
     ├── Screenshots/
-    |   ├── dark-developer.png 
+    |   ├── dark-developer.png
     |   ├── dark-standard.png
     |   ├── light-developer.png
     |   └── light-standard.png
+├── public/              # Static assets
 ├── src/
 │   ├── style/
 │   │   ├── dark.css     # Dark theme styles
@@ -173,13 +176,13 @@ The developer panel reveal uses a smooth CSS transition on `max-height`:
 
 ## Tech Stack
 
-| Technology            | Role                                  |
-| --------------------- | ------------------------------------- |
-| TypeScript            | Application logic and type safety     |
-| Vite                  | Development server and bundler        |
-| CSS (vanilla)         | Styling with theme scoping            |
-| Google Fonts (Outfit) | Typography                            |
-| localStorage          | theme and mode preferences            |
+| Technology            | Role                              |
+| --------------------- | --------------------------------- |
+| TypeScript            | Application logic and type safety |
+| Vite                  | Development server and bundler    |
+| CSS (vanilla)         | Styling with theme scoping        |
+| Google Fonts (Outfit) | Typography                        |
+| localStorage          | theme and mode preferences        |
 
 ---
 
