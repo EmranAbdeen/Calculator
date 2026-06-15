@@ -6,8 +6,8 @@ A modern, dual-mode calculator built with **TypeScript** and **Vite** — featur
  
 | Dark Theme | Light Theme |
 |---|---|
-| ![Dark Standard](public/Screenshots/dark-standard.png) | ![Light Standard](public/screenshots/light-standard.png) |
-| ![Dark Developer](public/Screenshots/dark-developer.png) | ![Light Developer](public/screenshots/light-developer.png) |
+| ![Dark Standard](public/Screenshots/dark-standard.png) | ![Light Standard](public/Screenshots/light-standard.png) |
+| ![Dark Developer](public/Screenshots/dark-developer.png) | ![Light Developer](public/Screenshots/light-developer.png) |
  
 ---
 ---
