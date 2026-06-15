@@ -21,6 +21,12 @@
   position: relative;
 }
 
+.light-theme .cal.mode-developer {
+  width: min(445px, 90vw);
+}
+.light-theme .cal.mode-developer .keybtn #zero {
+  grid-column: span 1 !important;
+}
 /* Theme Switcher Header */
 .light-theme .theme-header {
   display: flex;
@@ -33,7 +39,7 @@
 }
 
 .light-theme .brand-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-size: 1.6rem;
   font-weight: 700;
   background: linear-gradient(135deg, #0c46b9 0%, #027cf6 100%);
@@ -52,7 +58,7 @@
 
 .light-theme #calc-mode-select {
   flex-grow: 1;
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
@@ -85,7 +91,7 @@
 .light-theme #calc-mode-select option {
   background: #ffffff;
   color: #334155;
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-weight: 500;
 }
 
@@ -158,14 +164,12 @@
   font-size: 2.3rem;
   font-weight: 600;
   color: #1e293b;
-  /* letter-spacing: -0.5px; */
-  /* line-height: 1; */
 }
 
 /* Keypad Layout */
 .light-theme .keybtn {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 14px;
 }
 .light-theme #zero {
@@ -182,6 +186,19 @@
   font-size: 1.35rem;
   font-weight: 500;
   transition: all 0.25s;
+}
+/* Hexadecimal Keys */
+.light-theme .cal.mode-developer .keybtn .hex-key {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: #334155;
+  box-shadow: 0 4px 10px rgba(148, 163, 184, 0.06);
+  
+}
+.light-theme .cal.mode-developer .keybtn .hex-key:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 18px rgba(148, 163, 184, 0.15);
+  transform: translateY(-2px);
 }
 
 /* Number Buttons */

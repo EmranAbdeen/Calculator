@@ -16,6 +16,12 @@
   position: relative;
 }
 
+.dark-theme .cal.mode-developer {
+  width: min(445px, 90vw);
+}
+.dark-theme .cal.mode-developer .keybtn #zero {
+  grid-column: span 1 !important;
+}
 /* Theme Switcher Header */
 .dark-theme .theme-header {
   display: flex;
@@ -28,7 +34,7 @@
 }
 
 .dark-theme .brand-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-size: 1.6rem;
   font-weight: 700;
   background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 100%);
@@ -47,7 +53,7 @@
 
 .dark-theme #calc-mode-select {
   flex-grow: 1; /*هذا عشان يكونوا ملزقين ببعض*/
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
@@ -66,14 +72,16 @@
 .dark-theme #calc-mode-select:hover {
   background: rgba(30, 41, 59, 0.85);
   border-color: rgba(139, 92, 246, 0.45);
-  box-shadow:     0 0 12px rgba(139, 92, 246, 0.25),    0 6px 15px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 0 12px rgba(139, 92, 246, 0.25),
+    0 6px 15px rgba(0, 0, 0, 0.3);
   transform: translateY(-2.5px);
 }
 
 .dark-theme #calc-mode-select:focus {
   background: rgba(15, 23, 42, 0.95);
   border-color: #a78bfa;
-  box-shadow: 
+  box-shadow:
     0 0 0 3px rgba(167, 139, 250, 0.3),
     0 0 15px rgba(167, 139, 250, 0.2);
 }
@@ -81,7 +89,7 @@
 .dark-theme #calc-mode-select option {
   background: #0f172a;
   color: #f8fafc;
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-weight: 500;
 }
 
@@ -163,7 +171,7 @@
 /* Keypad Layout */
 .dark-theme .keybtn {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 14px;
 }
 .dark-theme #zero {
@@ -180,6 +188,23 @@
   font-size: 1.35rem;
   font-weight: 500;
   transition: all 0.25s;
+}
+
+/* Hexadecimal Keys */
+.dark-theme .keybtn .hex-key {
+  background: rgba(30, 41, 59, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  color: #f1f5f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.dark-theme .keybtn .hex-key:hover {
+  background: rgba(51, 65, 85, 0.5);
+  border-color: rgba(139, 92, 246, 0.25);
+  color: #ffffff;
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.25),
+    0 0 12px rgba(139, 92, 246, 0.15);
+  transform: translateY(-2px);
 }
 
 /* Number Buttons */

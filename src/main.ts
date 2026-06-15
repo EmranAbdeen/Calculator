@@ -53,7 +53,7 @@ appElement.innerHTML = `
         <input type="text" id="text" value="0" readonly />
       </div>
 
-      <!-- Programmer Base Conversion Display Panel >
+      <!-- Programmer Base Conversion Display Panel-->
       <div class="programmer-panel" id="programmer-panel">
         <div class="base-row" id="row-hex" data-base="HEX">
           <span class="base-label">HEX</span>
@@ -71,32 +71,39 @@ appElement.innerHTML = `
           <span class="base-label">BIN</span>
           <span class="base-value" id="val-bin">0</span>
         </div>
-      </div-->
+      </div>
 
       <div class="keybtn">
+        <button class="hex-key" data-hex="A">A</button>
         <button class="action" id="AC">AC</button>
         <button class="action" id="backspace">DEL</button>
         <button class="action" id="Mod">%</button>
         <button class="operator" id="Div">÷</button>
 
+        <button class="hex-key" data-hex="B">B</button>
         <button class="number" data-value="7">7</button>
         <button class="number" data-value="8">8</button>
         <button class="number" data-value="9">9</button>
         <button class="operator" id="Mul">×</button>
 
+        <button class="hex-key" data-hex="C">C</button>
         <button class="number" data-value="4">4</button>
         <button class="number" data-value="5">5</button>
         <button class="number" data-value="6">6</button>
         <button class="operator" id="Sub">-</button>
 
+        <button class="hex-key" data-hex="D">D</button>
         <button class="number" data-value="1">1</button>
         <button class="number" data-value="2">2</button>
         <button class="number" data-value="3">3</button>
         <button class="operator" id="Add">+</button>
 
+        <button class="hex-key" data-hex="E">E</button>
+        <button class="hex-key" data-hex="F">F</button>
         <button class="number" id="zero" data-value="0">0</button>
         <button id="dot">.</button>
         <button id="equals">=</button>
+      </div>
       </div>
     </div>
 `;
@@ -108,33 +115,205 @@ const historyExpression = document.getElementById(
 const themeToggleBtn = document.getElementById(
   "theme-toggle-btn",
 ) as HTMLButtonElement;
-// const calcModeSelect = document.getElementById(
-//   "calc-mode-select",
-// ) as HTMLSelectElement;
-// const calElement = document.querySelector(".cal") as HTMLElement;
+const calcModeSelect = document.getElementById(
+  "calc-mode-select",
+) as HTMLSelectElement;
+const calElement = document.querySelector(".cal") as HTMLElement;
 let justCalculated = false;
+type CalcMode = "normal" | "developer";
+
+// <===================Developer Mode State =======================>
+type Base = "HEX" | "DEC" | "OCT" | "BIN";
+let currentBase: Base = "DEC";
+
+// Base conversion helper functions
+const parseToDecimal = (value: string, base: Base): number => {
+  if (!value) return 0;
+  switch (base) {
+    case "BIN":
+      return Number(`0b${value}`);
+    case "OCT":
+      return Number(`0o${value}`);
+    case "HEX":
+      return Number(`0x${value}`);
+    case "DEC":
+    default:
+      return Number(value);
+  }
+};
+
+const formatFromDecimal = (value: number, base: Base): string => {
+  if (isNaN(value)) return "0";
+  const intVal = Math.floor(value);
+  switch (base) {
+    case "BIN":
+      return intVal.toString(2);
+    case "OCT":
+      return intVal.toString(8);
+    case "HEX":
+      return intVal.toString(16).toUpperCase();
+    case "DEC":
+    default:
+      return intVal.toString(10);
+  }
+};
+
+// Converts display expressions token-by-token from one base to another
+function convertExpressionBase(expr: string, fromBase: Base, toBase: Base): string {
+  let regex: RegExp;
+  switch (fromBase) {
+    case "BIN": regex = /[01]+/g; break;
+    case "OCT": regex = /[0-7]+/g; break;
+    case "DEC": regex = /[0-9]+/g; break;
+    case "HEX": regex = /[0-9A-Fa-f]+/g; break;
+  }
+  
+  return expr.replace(regex, (match) => {
+    const decVal = parseToDecimal(match, fromBase);
+    return formatFromDecimal(decVal, toBase);
+  });
+}
+
+// Evaluates base-specific expression strings to decimal integers
+function evaluateExpressionToDecimal(expr: string, base: Base): number {
+  let cleaned = expr.replace(/X/g, "*"); //.replace(/÷/g, "/");
+  cleaned = cleaned.replace(/[\+\-\*\/%]+$/, "").trim();
+  if (!cleaned) return 0;
+  
+  let regex: RegExp;
+  let prefix: string;
+  switch (base) {
+    case "BIN": regex = /[01]+/g; prefix = "0b"; break;
+    case "OCT": regex = /[0-7]+/g; prefix = "0o"; break;
+    case "HEX": regex = /[0-9A-Fa-f]+/g; prefix = "0x"; break;
+    case "DEC":
+    default:
+      regex = /[0-9]+/g; prefix = ""; break;
+  }
+  
+  let jsExpr = cleaned.replace(regex, (match) => {
+    return prefix + match;
+  });
+  
+  try {
+    const val = eval(jsExpr);
+    return typeof val === "number" ? Math.floor(val) : 0;
+  } catch {
+    return 0;
+  }
+}
+
+// Updates the values displayed on the base row elements
+function updateBasePanel() {
+  const decVal = evaluateExpressionToDecimal(result.value, currentBase);
+  
+  const valHex = document.getElementById("val-hex");
+  const valDec = document.getElementById("val-dec");
+  const valOct = document.getElementById("val-oct");
+  const valBin = document.getElementById("val-bin");
+  
+  if (valHex) valHex.textContent = formatFromDecimal(decVal, "HEX");
+  if (valDec) valDec.textContent = formatFromDecimal(decVal, "DEC");
+  if (valOct) valOct.textContent = formatFromDecimal(decVal, "OCT");
+  if (valBin) valBin.textContent = formatFromDecimal(decVal, "BIN");
+}
+
+// Restricts keyboard buttons based on the active base
+function updateKeyboardRestriction() {
+  const mode = calcModeSelect.value as CalcMode;
+  const dotBtn = document.getElementById("dot") as HTMLButtonElement | null;
+  const hexBtns = document.querySelectorAll(".hex-key") as NodeListOf<HTMLButtonElement>;
+  const numBtns = document.querySelectorAll(".number") as NodeListOf<HTMLButtonElement>;
+
+  if (mode !== "developer") {
+    if (dotBtn) dotBtn.disabled = false;
+    // hexBtns → disabled = true;    // A-F معطّلة دايماً
+    // numBtns → disabled = false;   // كل الأرقام متاحة
+    hexBtns.forEach(btn => btn.disabled = true);
+    numBtns.forEach(btn => btn.disabled = false);
+    return;
+  }
+
+  if (dotBtn) dotBtn.disabled = true;
+
+  hexBtns.forEach(btn => {
+    btn.disabled = currentBase !== "HEX";
+  });
+
+  numBtns.forEach(btn => {
+    const valStr = btn.dataset.value;
+    if (!valStr) return;
+    const val = parseInt(valStr, 10);
+    
+    if (currentBase === "BIN") {
+      btn.disabled = val > 1; // يعني 2-9 معطّلة
+    } else if (currentBase === "OCT") {
+      btn.disabled = val > 7; // يعني 8,9 معطّلة
+    } else if (currentBase === "DEC") {
+      btn.disabled = false;
+    } else if (currentBase === "HEX") {
+      btn.disabled = false;
+    }
+  });
+}
+
+function setActiveBase(base: Base) {
+  currentBase = base;
+  
+  // Update the active class on base rows ,
+  //* إضافة 
+  //* class active
+  //* على الصف المختار وإزالتها من الباقين 
+  //* (للـ CSS يعني يلوّنه)
+
+  const baseRows = document.querySelectorAll(".base-row");
+  baseRows.forEach(row => {
+    if (row.getAttribute("data-base") === base) {
+      row.classList.add("active");
+    } else {
+      row.classList.remove("active");
+    }
+  });
+  
+  updateKeyboardRestriction();
+}
+
+// Setup base row click event listeners
+//* Event Listeners على Base Rows — الضغط على HEX/DEC/OCT/BIN
+document.querySelectorAll(".base-row").forEach(row => {
+  row.addEventListener("click", () => {
+    const targetBase = row.getAttribute("data-base") as Base;
+    if (targetBase && targetBase !== currentBase) {
+      const oldBase = currentBase;
+      const convertedValue = convertExpressionBase(result.value, oldBase, targetBase);
+      result.value = convertedValue || "0";
+      setActiveBase(targetBase);
+      updateBasePanel();
+    }
+  });
+});
+// <===================Developer Mode State End=======================>
 
 // <===================Calculator Mode=======================>
 
-// function setCalcMode(mode: "normal" | "developer") {
-//   if (mode === "developer") {
-//     calElement.classList.add("mode-developer");
-//   } else {
-//     calElement.classList.remove("mode-developer");
-//   }
-//   calcModeSelect.value = mode;
-//   localStorage.setItem("calc-mode", mode);
-// }
+function setCalcMode(mode: CalcMode) {
+  if (mode === "developer") {
+    calElement.classList.add("mode-developer");
+  } else {
+    calElement.classList.remove("mode-developer");
+  }
+  calcModeSelect.value = mode;
+  localStorage.setItem("calc-mode", mode);
+  updateKeyboardRestriction();
+  updateBasePanel();
+}
 
-// const savedMode = localStorage.getItem("calc-mode") as
-//   | "normal"
-//   | "developer"
-//   | null;
-// setCalcMode(savedMode || "normal");
+const savedMode = localStorage.getItem("calc-mode") as CalcMode | null;
+setCalcMode(savedMode || "normal");
 
-// calcModeSelect.addEventListener("change", () => {
-//   setCalcMode(calcModeSelect.value as "normal" | "developer");
-// });
+calcModeSelect.addEventListener("change", () => {
+  setCalcMode(calcModeSelect.value as CalcMode);
+});
 
 // <===================Calculator Mode end=======================>
 
@@ -182,11 +361,12 @@ numbers.forEach((btn) => {
     } else {
       result.value = result.value === "0" ? value : result.value + value;
     }
+    updateBasePanel();
   });
 });
 
 //<===================numbers end=======================>
-
+// <===================Hexadecimal Keys=======================>
 document.querySelectorAll(".hex-key").forEach((btn) => {
   btn.addEventListener("click", (event) => {
     clearError();
@@ -198,22 +378,29 @@ document.querySelectorAll(".hex-key").forEach((btn) => {
     } else {
       result.value = result.value === "0" ? hex : result.value + hex;
     }
+    updateBasePanel();
   });
 });
+// <===================Hexadecimal Keys end=======================>
 
 //Delete
 function deleteElement(target: HTMLElement) {
   if (target.id === "backspace") {
     result.value = result.value.slice(0, -1);
+    if (result.value === "") {
+      result.value = "0";
+    }
     justCalculated = false;
+    updateBasePanel();
   }
 }
 // AC --> All Clear
-function reset(target: HTMLElement) {
+function AllClear(target: HTMLElement) {
   if (target.id === "AC") {
     result.value = "0";
   }
   clearHistory();
+  updateBasePanel();
 }
 
 //Operation
@@ -236,37 +423,48 @@ function operation(target: HTMLElement) {
   if (!isLastOperators) {
     result.value += op;
     justCalculated = false;
+    updateBasePanel();
   }
 }
 
 // decimal
-function decimal() {
+function decimalDot() {
   let parts = result.value.split(/[\+\-\X\*\/]/);
   let lastNumber = parts[parts.length - 1];
 
   if (!lastNumber.includes(".")) {
     result.value += ".";
     justCalculated = false;
+    updateBasePanel();
   }
 }
 // ! Result
 //* historyValue
 function equals() {
-  let expression = result.value.replace("X", "*");
-  try {
-    historyExpression.textContent = result.value + " =";
-    result.value = eval(expression);
-
-    justCalculated = true;
-    if (result.value === "undefined" || result.value === "NaN" || result.value === "null") {
-      result.value = "0";
+  const mode = calcModeSelect.value as CalcMode;
+  if (mode === "developer") {
+    try {
+      historyExpression.textContent = result.value + " =";
+      const decVal = evaluateExpressionToDecimal(result.value, currentBase);
+      result.value = formatFromDecimal(decVal, currentBase);
+      justCalculated = true;
+      updateBasePanel();
+    } catch {
+      triggerError();
     }
-  } catch {
-    result.value = "Error";
-    result.style.color = "red";
-    result.style.fontSize = "2.8rem";
-    result.style.letterSpacing = "2.5px";
-    clearHistory();
+  } else {
+    let expression = result.value.replace("X", "*").replace("÷", "/");
+    try {
+      historyExpression.textContent = result.value + " =";
+      result.value = eval(expression);
+
+      justCalculated = true;
+      if (result.value === "undefined" || result.value === "NaN" || result.value === "null") {
+        result.value = "0";
+      }
+    } catch {
+      triggerError();
+    }
   }
 }
 //* Clear history
@@ -288,17 +486,25 @@ function clearError() {
   }
 }
 
+function triggerError() {
+  result.value = "Error";
+  result.style.color = "red";
+  result.style.fontSize = "2.8rem";
+  result.style.letterSpacing = "2.5px";
+  clearHistory();
+}
+
 document.addEventListener("click", function (event) {
   const target = event.target as HTMLElement;
 
   clearError();
 
   target.id === "AC"
-    ? reset(target)
+    ? AllClear(target)
     : target.id === "backspace"
       ? deleteElement(target)
       : target.id === "dot"
-        ? decimal()
+        ? decimalDot()
         : target.id === "equals"
           ? equals()
           : operation(target);
