@@ -51,6 +51,11 @@ A modern, dual-mode calculator built with **TypeScript** and **Vite** — featur
 ```
 project/
 ├── public/              # Static assets
+    ├── Screenshots/
+    |   ├── dark-developer.png 
+    |   ├── dark-standard.png
+    |   ├── light-developer.png
+    |   └── light-standard.png
 ├── src/
 │   ├── style/
 │   │   ├── dark.css     # Dark theme styles
