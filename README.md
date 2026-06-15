@@ -83,8 +83,8 @@ project/
 
 ```bash
 # Clone the repository
-git clone https://github.com/EmranAbdeen/CalculatorTS.git
-cd CalculatorTS
+git clone https://github.com/EmranAbdeen/Calculator.git
+cd Calculator
 
 # Install dependencies
 npm install
