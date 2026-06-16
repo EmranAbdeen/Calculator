@@ -17,7 +17,7 @@ A modern, dual-mode calculator built with **TypeScript** and **Vite** — featur
 
 ### Standard Mode
 
-- Basic arithmetic operations: addition, subtraction, multiplication, division, and modulo
+- Basic arithmetic operations: addition, subtraction, multiplication, division, and mod
 - Decimal point support
 - Expression history display (shows the previous expression above the result)
 - DEL (backspace) and AC (all clear) buttons
